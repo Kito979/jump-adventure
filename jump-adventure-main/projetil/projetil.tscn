@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dfpbuqg3j8b2e"]
+
+[ext_resource type="Script" uid="uid://y7ogpo5qs03x" path="res://projetil/projetil.gd" id="1_36hcj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_36hcj"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_g6eqq"]
+
+[node name="Node2D" type="Node2D" unique_id=1510073864]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1249699545]
+scale = Vector2(0.4000004, 0.48000008)
+script = ExtResource("1_36hcj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=579760178]
+scale = Vector2(1.1040909, 0.9166664)
+shape = SubResource("CircleShape2D_36hcj")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=1166985910]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(20.725506, 17.378765)
+texture = SubResource("CanvasTexture_g6eqq")
