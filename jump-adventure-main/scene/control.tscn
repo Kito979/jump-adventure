@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://dlk4bdhi6qh5o"]
+
+[ext_resource type="Script" uid="uid://btpa6gpuxwr5r" path="res://scripts/button.gd" id="1_f676y"]
+[ext_resource type="Script" uid="uid://crp855b7jdjfv" path="res://scripts/button_2.gd" id="2_8g54p"]
+[ext_resource type="Script" uid="uid://bmg8u6pt6cbxi" path="res://scripts/button_3.gd" id="3_j0f1v"]
+
+[node name="home" type="Control" unique_id=1785562436]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1808877322]
+layout_mode = 0
+offset_left = -135.0
+offset_top = -82.0
+offset_right = -95.0
+offset_bottom = -42.0
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1756926754]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.5
+offset_top = -60.5
+offset_right = 33.5
+offset_bottom = 60.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=642025729]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=847267596]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=2125881663]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1547734238]
+layout_mode = 2
+text = "jogar"
+script = ExtResource("1_f676y")
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=116029266]
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=499438293]
+layout_mode = 2
+text = "Créditos"
+script = ExtResource("2_8g54p")
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1817674433]
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=400001439]
+layout_mode = 2
+text = "sair"
+script = ExtResource("3_j0f1v")
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=1190869896]
+layout_mode = 2
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/Button" to="MarginContainer/HBoxContainer/VBoxContainer/Button" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/Button2" to="MarginContainer/HBoxContainer/VBoxContainer/Button" method="_on_button_2_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/Button3" to="MarginContainer/HBoxContainer/VBoxContainer/Button" method="_on_button_3_pressed"]
