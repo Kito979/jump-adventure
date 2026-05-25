@@ -1,0 +1,145 @@
+[gd_scene format=3 uid="uid://qsqgheqwuxi"]
+
+[ext_resource type="Script" uid="uid://cb6txf4edelpl" path="res://scene/personagens/player/player.gd" id="1_s4jxa"]
+[ext_resource type="Texture2D" uid="uid://dm806r5jpv7kv" path="res://sprites/1 - Penguin/Waddling (16 x 16).png" id="2_oh5ij"]
+[ext_resource type="Texture2D" uid="uid://dbuxm804rd1gh" path="res://sprites/1 - Penguin/Idle (16 x 16).png" id="3_hp4bs"]
+[ext_resource type="Texture2D" uid="uid://dfwbpo50croej" path="res://sprites/1 - Penguin/Jump (16 x 16).png" id="4_g2vtq"]
+[ext_resource type="Script" uid="uid://cx05l43icsn0u" path="res://scene/personagens/player/camera_2d.gd" id="5_2fvbb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_81276"]
+atlas = ExtResource("2_oh5ij")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ve786"]
+atlas = ExtResource("2_oh5ij")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0lu6w"]
+atlas = ExtResource("2_oh5ij")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i6gbm"]
+atlas = ExtResource("2_oh5ij")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ux4dc"]
+atlas = ExtResource("2_oh5ij")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrd6n"]
+atlas = ExtResource("2_oh5ij")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33cqm"]
+atlas = ExtResource("3_hp4bs")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwcet"]
+atlas = ExtResource("3_hp4bs")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1ry8"]
+atlas = ExtResource("3_hp4bs")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xlg7c"]
+atlas = ExtResource("3_hp4bs")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpk70"]
+atlas = ExtResource("3_hp4bs")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ll5lq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_81276")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ve786")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0lu6w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i6gbm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ux4dc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jrd6n")
+}],
+"loop": true,
+"name": &"andando",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_33cqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwcet")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p1ry8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xlg7c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qpk70")
+}],
+"loop": true,
+"name": &"parado",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_g2vtq")
+}],
+"loop": true,
+"name": &"pulando",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dbls1"]
+radius = 6.0
+height = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_78rex"]
+size = Vector2(30.997583, 21.000008)
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1353534776 groups=["player"]]
+scale = Vector2(2.451804, 2.636362)
+script = ExtResource("1_s4jxa")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1606017235]
+sprite_frames = SubResource("SpriteFrames_ll5lq")
+animation = &"pulando"
+autoplay = "parado"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1338540970]
+scale = Vector2(-365.3983, -5.891775)
+script = ExtResource("5_2fvbb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2100864635]
+shape = SubResource("CapsuleShape2D_dbls1")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1171298799]
+collision_layer = 4
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=533830242]
+position = Vector2(8.972985, -0.25861782)
+shape = SubResource("RectangleShape2D_78rex")
+
+[node name="DebugVisualizer" type="ColorRect" parent="Area2D" unique_id=1496423650]
+modulate = Color(0.9341946, 0, 0, 1)
+offset_left = -6.5258074
+offset_top = -10.620696
+offset_right = 33.474194
+offset_bottom = 29.379303
+scale = Vector2(0.76745385, 0.5149316)
+color = Color(1.3528494, 0, 0, 0.49411765)
