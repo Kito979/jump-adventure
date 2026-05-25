@@ -1,8 +1,8 @@
 extends Control
 
 # Pega a referência exata dos botões baseada na sua árvore de nós
-@onready var btn_start = $MarginContainer/HBoxContainer/VBoxContainer/Btn_Start
-@onready var btn_sair = $MarginContainer/HBoxContainer/VBoxContainer/Btn_Sair
+@onready var btn_start = $MarginContainer/HBoxContainer/VBoxContainer/btn_Start
+@onready var btn_sair = $MarginContainer/HBoxContainer/VBoxContainer/btn_sair
 
 func _ready() -> void:
 	# 1. Garante que o botão Start já venha selecionado (ótimo para quem joga no controle/teclado)

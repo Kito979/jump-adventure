@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cb6txf4edelpl" path="res://scene/personagens/player/player.gd" id="1_s4jxa"]
 [ext_resource type="Texture2D" uid="uid://dm806r5jpv7kv" path="res://sprites/1 - Penguin/Waddling (16 x 16).png" id="2_oh5ij"]
+[ext_resource type="Texture2D" uid="uid://b6j334qq4rfw7" path="res://sprites/1 - Penguin/Victory_Dance (16 x 16).png" id="3_f7khl"]
 [ext_resource type="Texture2D" uid="uid://dbuxm804rd1gh" path="res://sprites/1 - Penguin/Idle (16 x 16).png" id="3_hp4bs"]
 [ext_resource type="Texture2D" uid="uid://dfwbpo50croej" path="res://sprites/1 - Penguin/Jump (16 x 16).png" id="4_g2vtq"]
 [ext_resource type="Script" uid="uid://cx05l43icsn0u" path="res://scene/personagens/player/camera_2d.gd" id="5_2fvbb"]
@@ -29,6 +30,26 @@ region = Rect2(64, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_jrd6n"]
 atlas = ExtResource("2_oh5ij")
 region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykgxp"]
+atlas = ExtResource("3_f7khl")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uojpm"]
+atlas = ExtResource("3_f7khl")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llbnd"]
+atlas = ExtResource("3_f7khl")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14oiy"]
+atlas = ExtResource("3_f7khl")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtlnh"]
+atlas = ExtResource("3_f7khl")
+region = Rect2(64, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_33cqm"]
 atlas = ExtResource("3_hp4bs")
@@ -77,6 +98,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ykgxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uojpm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_llbnd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14oiy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtlnh")
+}],
+"loop": true,
+"name": &"dacando",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_33cqm")
 }, {
 "duration": 1.0,
@@ -117,7 +158,7 @@ script = ExtResource("1_s4jxa")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1606017235]
 sprite_frames = SubResource("SpriteFrames_ll5lq")
-animation = &"pulando"
+animation = &"dacando"
 autoplay = "parado"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1338540970]

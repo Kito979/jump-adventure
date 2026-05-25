@@ -2,6 +2,8 @@ extends CharacterBody2D # Herda de um nó físico com colisão
 
 @export var HPmax: int = 5
 @onready var HP: int = HPmax # Começa com a vida cheia
+@onready var animacao: AnimatedSprite2D = $AnimatedSprite2D
+
 
 const SPEED = 300.0 # Velocidade horizontal
 const SPEED_RUN = 600.0
@@ -82,12 +84,30 @@ func _physics_process(delta: float) -> void:
 		
 	# 5. MOVIMENTO HORIZONTAL
 	var direction := Input.get_axis("esquerda", "direita")
+	
 	if direction: 
 		velocity.x = direction * SPEED
+		
+		# Inverte o sprite dependendo da direção
+		if direction < 0:
+			animacao.flip_h = true
+		elif direction > 0:
+			animacao.flip_h = false
+			
 	else:
 		velocity.x = move_toward(velocity.x, 0, 15) 
 	
 	move_and_slide()
+
+	# 6. CONTROLE DE ANIMAÇÕES
+	if is_attacking:
+		animacao.play("dacando")
+	elif not is_on_floor() and coyote_timer <= 0.0:
+		animacao.play("pulando")
+	elif direction != 0:
+		animacao.play("andando")
+	else:
+		animacao.play("parado")
 
 # --- SISTEMA DE DANO E INTANGIBILIDADE ---
 
@@ -129,8 +149,6 @@ func atacar():
 	# >>> COMENTE A LINHA ABAIXO NA VERSÃO FINAL <<<
 	debug_visualizer.visible = true
 	# ---------------------------------------------
-	
-	# $AnimatedSprite2D.play("animacao_de_ataque")
 	
 	# Pega todos os corpos que estão dentro da Area2D
 	var corpos_na_area = attack_area.get_overlapping_bodies()

@@ -10,6 +10,9 @@ extends CharacterBody2D
 @export var max_hp: int = 3
 @onready var hp: int = max_hp
 
+# NOVO: Referência para o AnimatedSprite2D
+@onready var animacao: AnimatedSprite2D = $AnimatedSprite2D
+
 # Timer para controlar o efeito visual de piscar vermelho
 var color_timer = Timer.new()
 
@@ -26,6 +29,9 @@ var direcao_olhar: float = 1.0 # 1.0 = Direita, -1.0 = Esquerda
 var jogador_detectado: bool = false
 var alcance_visao: float
 
+# NOVO: Controles de estado de animação temporária
+var esta_tomando_dano: bool = false
+
 func _ready():
 	shoot_timer.wait_time = 1.0
 	shoot_timer.one_shot = true
@@ -39,8 +45,10 @@ func _ready():
 	procura_player.add_exception(self)
 	
 	# --- NOVO: BUSCA AUTOMÁTICA DO JOGADOR ---
-	# O inimigo procura na fase inteira quem faz parte do grupo "player"
 	player = get_tree().get_first_node_in_group("player")
+	
+	# Conecta o sinal para sabermos quando as animações temporárias terminam
+	animacao.animation_finished.connect(_on_animation_finished)
 
 func _physics_process(delta):
 	# Se o jogador foi destruído/morreu, tenta achar de novo (caso ele dê respawn)
@@ -77,6 +85,9 @@ func _physics_process(delta):
 		processar_patrulha()
 
 	move_and_slide()
+	
+	# 5. GERENCIADOR DE ANIMAÇÕES
+	atualizar_animacoes()
 
 # --- FUNÇÃO QUE GIRA O RAYCAST NA DIREÇÃO DO PLAYER ---
 func apontar_visao_para_jogador():
@@ -132,10 +143,44 @@ func atirar():
 		var direcao_raycast = procura_player.target_position.normalized()
 		
 		bullet.global_position = global_position + (direcao_raycast * bullet_spawn_offset)
-		bullet.rotation = direcao_raycast.angle()
+		bullet.rotation = direcast_angle(direcao_raycast)
 		
 		get_tree().root.add_child(bullet)
 		shoot_timer.start()
+		
+		# Toca a animação de tiro (se não estiver rolando por dano)
+		if not esta_tomando_dano:
+			animacao.play("tiro")
+
+func direcast_angle(direcao: Vector2) -> float:
+	return direcao.angle()
+
+# --- NOVO: SISTEMA DE PRIORIDADE DE ANIMAÇÕES ---
+func atualizar_animacoes():
+	# Controla o espelhamento horizontal do sprite baseado para onde ele olha
+	if direcao_olhar < 0:
+		animacao.flip_h = true
+	elif direcao_olhar > 0:
+		animacao.flip_h = false
+
+	# Se estiver rolando (tomando dano), não mude a animação até terminar
+	if esta_tomando_dano:
+		return
+		
+	# Se estiver executando a animação de tiro, deixa ela terminar
+	if animacao.animation == "tiro" and animacao.is_playing():
+		return
+
+	# Movimento ou Parado
+	if abs(velocity.x) > 2.0:
+		animacao.play("correndo")
+	else:
+		animacao.play("parado")
+
+# Executa quando animações que dão "play" uma única vez terminam
+func _on_animation_finished():
+	if animacao.animation == "rolando":
+		esta_tomando_dano = false
 
 # ==========================================
 # --- SISTEMA DE DANO E MORTE DO INIMIGO ---
@@ -145,6 +190,10 @@ func tomar_dano(quantidade: int, _posicao_fonte: Vector2 = Vector2.ZERO):
 	hp -= quantidade
 	modulate = Color(1.0, 0.2, 0.2) 
 	color_timer.start() 
+	
+	# Ativa o estado de dano e toca a animação de rolar
+	esta_tomando_dano = true
+	animacao.play("rolando")
 	
 	if hp <= 0:
 		morrer()
